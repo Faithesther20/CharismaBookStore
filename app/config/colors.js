@@ -3,5 +3,6 @@ export default {
   orange: "#F89300",
   black: "#000",
   grey: "#120202ad",
-  lightOrange:"#FEF4E6"
+  lightOrange: "#FEF4E6",
+  lightGrey: "#f4f4f4",
 };
