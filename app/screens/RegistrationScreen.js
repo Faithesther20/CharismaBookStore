@@ -1,18 +1,14 @@
 //@ts-check
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { Formik } from "formik";
 import * as Yup from "yup";
 
-import AppButton from "../components/AppButton";
-import AppTextInput from "../components/AppInputText";
 import AppText from "../components/AppText";
-import ErrorMessage from "../components/ErrorMessage";
 import IconButton from "../components/IconButton";
-import PasswordInput from "../components/PasswordInput";
 
 import colors from "../config/colors";
 import defaultStyles from "../config/styles";
+import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 
 function RegistrationScreen(props) {
   // The validationSchema for the input values by the user with yup
@@ -58,7 +54,7 @@ function RegistrationScreen(props) {
 
       {/* using formik to manage the forms */}
       <View style={styles.form}>
-        <Formik
+        <AppForm
           initialValues={{
             username: "",
             email: "",
@@ -67,72 +63,41 @@ function RegistrationScreen(props) {
           }}
           onSubmit={(values) => console.log(values)}
           validationSchema={validationSchema}>
-          {({
-            handleChange,
-            handleSubmit,
-            errors,
-            setFieldTouched,
-            touched,
-          }) => (
-            <>
-              {/* for each inpute field an error message is attached fo */}
-              <AppTextInput
-                icon={"account-circle"}
-                placeholder={"Enter a user name"}
-                onChangeText={handleChange("username")}
-                // @ts-ignore
-                onBlur={() => setFieldTouched("username")}
-              />
-
-              <ErrorMessage
-                error={errors.username}
-                visible={touched.username}
-              />
-              <AppTextInput
-                icon={"account-circle"}
-                placeholder={"Enter an email address"}
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardType="email-address"
-                textContentType="emailAddress"
-                onChangeText={handleChange("email")}
-                onBlur={() => setFieldTouched("email")}
-              />
-              <ErrorMessage error={errors.email} visible={touched.email} />
-              <PasswordInput
-                icon={"lock"}
-                placeholder={"Enter a password"}
-                autoCapitalize="none"
-                autoCorrect={false}
-                onChangeText={handleChange("password")}
-                onBlur={() => setFieldTouched("password")}
-              />
-              <ErrorMessage
-                error={errors.password}
-                visible={touched.password}
-              />
-              <PasswordInput
-                icon={"lock"}
-                placeholder={"Re-enter password "}
-                autoCapitalize="none"
-                autoCorrect={false}
-                onChangeText={handleChange("re_enterPassword")}
-                onBlur={() => setFieldTouched("re_enterPassword")}
-              />
-              <ErrorMessage
-                error={errors.re_enterPassword}
-                visible={touched.re_enterPassword}
-              />
-              <AppButton
-                title={"Submit"}
-                onPress={handleSubmit}
-                customStyle={undefined}
-                customTextStyle={undefined}
-                iconImage={undefined}
-              />
-            </>
-          )}
-        </Formik>
+          {/* for each inpute field an error message is attached fo */}
+          <AppFormField
+            name="username"
+            icon={"account-circle"}
+            placeholder={"Enter a user name"}
+            fieldType={undefined}
+          />
+          <AppFormField
+            icon="account-circle"
+            placeholder="Enter an email address"
+            autoCapitalize="none"
+            autoCorrect={false}
+            name="email"
+            keyboardType="email-address"
+            textContentType="emailAddress"
+            fieldType={undefined}
+          />
+          <AppFormField
+            name="password"
+            icon="lock"
+            placeholder="Enter a password"
+            fieldType="password"
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          <AppFormField
+            name="re_enterPassword"
+            icon={"lock"}
+            fieldType="password"
+            placeholder={"Re-enter password "}
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          <SubmitButton title="Submit" />
+        </AppForm>
       </View>
     </View>
   );
