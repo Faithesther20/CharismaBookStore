@@ -80,10 +80,14 @@ function RegistrationScreen(props) {
                 icon={"account-circle"}
                 placeholder={"Enter a user name"}
                 onChangeText={handleChange("username")}
-                // onBlur={setFieldTouched("username")}
+                // @ts-ignore
+                onBlur={() => setFieldTouched("username")}
               />
-              <AppText style={{ color: "red" }}>{errors.username}</AppText>
-              {/* <ErrorMessage error={errors.username} visible={touched.email} /> */}
+
+              <ErrorMessage
+                error={errors.username}
+                visible={touched.username}
+              />
               <AppTextInput
                 icon={"account-circle"}
                 placeholder={"Enter an email address"}
@@ -92,26 +96,33 @@ function RegistrationScreen(props) {
                 keyboardType="email-address"
                 textContentType="emailAddress"
                 onChangeText={handleChange("email")}
+                onBlur={() => setFieldTouched("email")}
               />
-              <AppText style={{ color: "red" }}>{errors.email}</AppText>
+              <ErrorMessage error={errors.email} visible={touched.email} />
               <PasswordInput
                 icon={"lock"}
                 placeholder={"Enter a password"}
                 autoCapitalize="none"
                 autoCorrect={false}
                 onChangeText={handleChange("password")}
+                onBlur={() => setFieldTouched("password")}
               />
-              <AppText style={{ color: "red" }}>{errors.password}</AppText>
+              <ErrorMessage
+                error={errors.password}
+                visible={touched.password}
+              />
               <PasswordInput
                 icon={"lock"}
                 placeholder={"Re-enter password "}
                 autoCapitalize="none"
                 autoCorrect={false}
                 onChangeText={handleChange("re_enterPassword")}
+                onBlur={() => setFieldTouched("re_enterPassword")}
               />
-              <AppText style={{ color: "red" }}>
-                {errors.re_enterPassword}
-              </AppText>
+              <ErrorMessage
+                error={errors.re_enterPassword}
+                visible={touched.re_enterPassword}
+              />
               <AppButton
                 title={"Submit"}
                 onPress={handleSubmit}

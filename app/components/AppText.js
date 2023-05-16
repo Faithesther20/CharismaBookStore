@@ -15,6 +15,7 @@ function AppText({
   // calling the actual fonts
   // pass the path to your fon't here with a name
   let [fontLoaded] = useFonts({
+    // @ts-ignore
     Urbanist: require("../assets/fonts/Urbanist-VariableFont_wght.ttf"),
   });
 

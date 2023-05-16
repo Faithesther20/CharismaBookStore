@@ -7,11 +7,20 @@ import defaultStyles from "../config/styles";
 import { useFonts } from "expo-font";
 import colors from "../config/colors";
 
-function AppTextInput({ family = "Urbanist", icon, ...otherProps }) {
+function AppTextInput({
+  family = "Urbanist",
+  onBlur = undefined,
+  icon,
+  ...otherProps
+}) {
   const [isFocused, setIsFocused] = useState(false);
   let [fontLoaded] = useFonts({
     Urbanist: require("../assets/fonts/Urbanist-VariableFont_wght.ttf"),
   });
+
+  if (typeof onBlur === "undefined") {
+    onBlur = undefined; // Set onBlur to undefined explicitly
+  }
 
   // creating a component  that for the input field that accepts my custom font style
   return (
@@ -40,7 +49,9 @@ function AppTextInput({ family = "Urbanist", icon, ...otherProps }) {
             <TextInput
               style={[styles.text, { fontFamily: family }]}
               onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
+              onBlur={() => {
+                [setIsFocused(false), onBlur && onBlur()]; // Invoke the onBlur prop if provided
+              }}
               {...otherProps}
             />
           </View>
