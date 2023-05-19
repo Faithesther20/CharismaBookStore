@@ -5,23 +5,16 @@ import * as Yup from "yup";
 
 import AppText from "../components/AppText";
 import IconButton from "../components/IconButton";
+import AppButton from "../components/AppButton";
 
 import colors from "../config/colors";
 import defaultStyles from "../config/styles";
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import KeyboardAvoiding from "../components/KeyBoardAvoiding";
 
-function RegistrationScreen({navigation}) {
-  // The registrationValidationSchema for the input values by the user with yup
-  const registrationValidationSchema = Yup.object().shape({
-    username: Yup.string()
-      .required("Username is required")
-      .min(3, "Username must be at least 3 characters")
-      .max(20, "Username must be at most 20 characters")
-      .matches(
-        /^[a-zA-Z0-9]+$/,
-        "Username must contain only letters and numbers"
-      ),
+function LoginScreen({navigation}) {
+  // The loginValidationSchema for the input values by the user with yup
+  const loginValidationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
     password: Yup.string()
       .required("Password is required")
@@ -30,9 +23,6 @@ function RegistrationScreen({navigation}) {
         /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
         "Password must contain at least one letter and one number"
       ),
-    re_enterPassword: Yup.string()
-      .oneOf([Yup.ref("password")], "Passwords must match")
-      .required("Confirm Password is required"),
   });
   return (
     <KeyboardAvoiding>
@@ -41,20 +31,16 @@ function RegistrationScreen({navigation}) {
       <AppTextInput icon={"email"} placeholder={"Enter your email here"} />
     */}
         <View style={styles.topBar}>
-          <IconButton
-            icon={"keyboard-backspace"}
-            iconStyle={undefined}
-            onPress={() => navigation.navigate("Welcome")}
-          />
+          <IconButton icon={"keyboard-backspace"} iconStyle={undefined}  onPress={() => navigation.navigate("Welcome")}/>
           <View style={styles.lineStyle} />
         </View>
 
         <View style={styles.content}>
           <AppText style={[defaultStyles.heading, styles.heading]}>
-            Create an Account 🔐
+            Hello there 👋
           </AppText>
           <AppText style={styles.title}>
-            Enter a username, email & password to get your account created.
+            Please enter your username and password to Login to the store
           </AppText>
         </View>
 
@@ -62,23 +48,15 @@ function RegistrationScreen({navigation}) {
         <View style={styles.form}>
           <AppForm
             initialValues={{
-              username: "",
               email: "",
               password: "",
-              re_enterPassword: "",
             }}
             onSubmit={(values) => console.log(values)}
-            validationSchema={registrationValidationSchema}>
+            validationSchema={loginValidationSchema}>
             {/* for each inpute field an error message is attached fo */}
             <AppFormField
-              name="username"
-              icon={"account-circle"}
-              placeholder={"Enter a user name"}
-              fieldType={undefined}
-            />
-            <AppFormField
               icon="account-circle"
-              placeholder="Enter an email address"
+              placeholder="Enter your registered"
               autoCapitalize="none"
               autoCorrect={false}
               name="email"
@@ -94,15 +72,14 @@ function RegistrationScreen({navigation}) {
               autoCapitalize="none"
               autoCorrect={false}
             />
-            <AppFormField
-              name="re_enterPassword"
-              icon={"lock"}
-              fieldType="password"
-              placeholder={"Re-enter password "}
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
+
             <View style={styles.button}>
+              <AppButton
+                customStyle={styles.googleButton}
+                customTextStyle={styles.googleButtonText}
+                iconImage={require("../assets/google.png")}
+                title={"Continue with Google"}
+              />
               <SubmitButton title="Submit" />
             </View>
           </AppForm>
@@ -114,7 +91,7 @@ function RegistrationScreen({navigation}) {
 
 const styles = StyleSheet.create({
   button: {
-    marginTop: "30%",
+    flex: 1,
   },
   content: {
     flex: 0.7,
@@ -124,7 +101,13 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   form: {
-    flex: 3,
+    flex: 1,
+  },
+  googleButton: {
+    backgroundColor: "#f4f4f4",
+  },
+  googleButtonText: {
+    color: colors.grey,
   },
   heading: {
     marginTop: 25,
@@ -149,4 +132,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegistrationScreen;
+export default LoginScreen;

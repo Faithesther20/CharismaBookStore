@@ -5,7 +5,7 @@ import colors from "../config/colors";
 import AppText from "../components/AppText";
 import AppButton from "../components/AppButton";
 
-function WelcomeScreen(props) {
+function WelcomeScreen({navigation}) {
   return (
     <View style={styles.container}>
       <Image
@@ -31,12 +31,15 @@ function WelcomeScreen(props) {
             iconImage={require("../assets/google.png")}
             title={"Continue with Google"}
           />
-          <AppButton title={"Get Started"} />
+          <AppButton title={"Get Started"} 
+          onPress={() => navigation.navigate("Register")}
+          />
 
           <AppButton
             title={"Already Have an Account"}
             customStyle={styles.gotoLoginButton}
             customTextStyle={styles.gotoLoginButtonText}
+            onPress={() => navigation.navigate("Login")}
           />
         </View>
       </View>
