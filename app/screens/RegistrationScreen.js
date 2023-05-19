@@ -11,7 +11,7 @@ import defaultStyles from "../config/styles";
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import KeyboardAvoiding from "../components/KeyBoardAvoiding";
 
-function RegistrationScreen({navigation}) {
+function RegistrationScreen({ navigation }) {
   // The registrationValidationSchema for the input values by the user with yup
   const registrationValidationSchema = Yup.object().shape({
     username: Yup.string()
