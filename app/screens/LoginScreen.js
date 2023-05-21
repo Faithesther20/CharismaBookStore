@@ -1,6 +1,5 @@
-//@ts-check
 import React from "react";
-import { View, StyleSheet, KeyboardAvoidingView } from "react-native";
+import { View, StyleSheet, KeyboardAvoidingView, Alert } from "react-native";
 import * as Yup from "yup";
 
 import AppText from "../components/AppText";
@@ -12,7 +11,7 @@ import defaultStyles from "../config/styles";
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import KeyboardAvoiding from "../components/KeyBoardAvoiding";
 
-function LoginScreen({navigation}) {
+function LoginScreen({ navigation }) {
   // The loginValidationSchema for the input values by the user with yup
   const loginValidationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
@@ -24,6 +23,47 @@ function LoginScreen({navigation}) {
         "Password must contain at least one letter and one number"
       ),
   });
+
+  const handleLogin = (values) => {
+    // Create a new FormData object
+    console.log(values);
+    const formData = new FormData();
+
+    // Append the username and password to the FormData object
+    formData.append("email", values.email);
+    formData.append("password", values.password);
+
+    // Send an HTTP POST request to the login.php script
+    fetch("http://192.168.107.102:80/api/login.php", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        // Handle the response from the PHP script
+        console.log(result.message);
+        // Show success or error message
+
+        // Perform further actions based on the login result
+        if (result.length > 0 && result[0].message === "Login successful!") {
+          Alert.alert("Success", result[0].message);
+          navigation.navigate("Welcome");
+          // Redirect to the home screen or perform any desired actions
+        } else {
+          Alert.alert(
+            "Error",
+            result[0].message || "Login failed. Please try again."
+          );
+          // Clear the username and password fields or show error message
+        }
+      })
+      .catch((error) => {
+        // Handle any errors that occur during the request
+        console.log(error);
+        Alert.alert("Login failed. Please try again.");
+      });
+  };
+
   return (
     <KeyboardAvoiding>
       <View style={styles.container}>
@@ -31,7 +71,11 @@ function LoginScreen({navigation}) {
       <AppTextInput icon={"email"} placeholder={"Enter your email here"} />
     */}
         <View style={styles.topBar}>
-          <IconButton icon={"keyboard-backspace"} iconStyle={undefined}  onPress={() => navigation.navigate("Welcome")}/>
+          <IconButton
+            icon={"keyboard-backspace"}
+            iconStyle={undefined}
+            onPress={() => navigation.navigate("Welcome")}
+          />
           <View style={styles.lineStyle} />
         </View>
 
@@ -51,12 +95,12 @@ function LoginScreen({navigation}) {
               email: "",
               password: "",
             }}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={handleLogin}
             validationSchema={loginValidationSchema}>
             {/* for each inpute field an error message is attached fo */}
             <AppFormField
               icon="account-circle"
-              placeholder="Enter your registered"
+              placeholder="Enter your registered email "
               autoCapitalize="none"
               autoCorrect={false}
               name="email"
@@ -74,12 +118,12 @@ function LoginScreen({navigation}) {
             />
 
             <View style={styles.button}>
-              <AppButton
+              {/* <AppButton
                 customStyle={styles.googleButton}
                 customTextStyle={styles.googleButtonText}
                 iconImage={require("../assets/google.png")}
                 title={"Continue with Google"}
-              />
+              /> */}
               <SubmitButton title="Submit" />
             </View>
           </AppForm>

@@ -1,6 +1,5 @@
-//@ts-check
 import React from "react";
-import { View, StyleSheet, KeyboardAvoidingView } from "react-native";
+import { View, StyleSheet, KeyboardAvoidingView, Alert } from "react-native";
 import * as Yup from "yup";
 
 import AppText from "../components/AppText";
@@ -10,8 +9,9 @@ import colors from "../config/colors";
 import defaultStyles from "../config/styles";
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import KeyboardAvoiding from "../components/KeyBoardAvoiding";
+import { handleRegistration } from "../handlers/registrationHandler";
 
-function RegistrationScreen({navigation}) {
+function RegistrationScreen({ navigation }) {
   // The registrationValidationSchema for the input values by the user with yup
   const registrationValidationSchema = Yup.object().shape({
     username: Yup.string()
@@ -34,6 +34,14 @@ function RegistrationScreen({navigation}) {
       .oneOf([Yup.ref("password")], "Passwords must match")
       .required("Confirm Password is required"),
   });
+
+  // Assuming you have stored the user input values in state variables
+
+  // Create a function to handle the registration
+  const handleRegister = (values) => {
+    handleRegistration(values, navigation);
+  };
+
   return (
     <KeyboardAvoiding>
       <View style={styles.container}>
@@ -67,7 +75,7 @@ function RegistrationScreen({navigation}) {
               password: "",
               re_enterPassword: "",
             }}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={handleRegister}
             validationSchema={registrationValidationSchema}>
             {/* for each inpute field an error message is attached fo */}
             <AppFormField
