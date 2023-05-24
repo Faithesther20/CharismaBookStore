@@ -47,7 +47,7 @@ function LoginScreen({ navigation }) {
         // Perform further actions based on the login result
         if (result.length > 0 && result[0].message === "Login successful!") {
           Alert.alert("Success", result[0].message);
-          navigation.navigate("Welcome");
+          navigation.navigate("Home");
           // Redirect to the home screen or perform any desired actions
         } else {
           Alert.alert(

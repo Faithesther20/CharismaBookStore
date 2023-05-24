@@ -12,14 +12,19 @@ import Screen from "./app/components/Screen";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import myTheme from "./app/navigation/navigationTheme";
+import HomeScreen from "./app/screens/HomeScreen";
 
 export default function App() {
   return (
-    <NavigationContainer theme={myTheme}>
-      <Screen>
-        <AuthNavigator />
-      </Screen>
-    </NavigationContainer>
+    // <NavigationContainer theme={myTheme}>
+    //   <Screen>
+    //     <AuthNavigator />
+    //   </Screen>
+    // </NavigationContainer>
+    <Screen>
+      <HomeScreen/>
+    </Screen>
+    
   );
 }
 

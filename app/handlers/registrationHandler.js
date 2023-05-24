@@ -11,8 +11,8 @@ export const handleRegistration = (values, navigation) => {
   data.append("password", values.password);
   data.append("isAdmin", "false");
 
-  // Send an HTTP POST request to the local PHP script
-  fetch("http://192.168.107.102:80/api/register.php", {
+  // Send an HTTP POST request to the local PHP script172.18.48.1    192.168.107.102:80
+  fetch("http://172.18.48.1:80/api/register.php", {
     method: "POST",
     headers: {
       // "Content-Type": "application/json",

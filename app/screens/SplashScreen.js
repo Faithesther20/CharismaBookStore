@@ -26,7 +26,7 @@ function SplashScreen(props) {
     <View style={styles.background}>
       <AppText style={styles.motto}>Inspire. Believe. Read</AppText>
       <LottieView style={styles.animation} source={animation} autoPlay loop />
-      <AppText style={styles.logo}>Charisma Book Store</AppText>
+      <AppText style={styles.logo}>Charism Book Store</AppText>
     </View>
   );
 }
