@@ -17,7 +17,7 @@ const CategoryList = ({ data, onPress }) => {
       keyExtractor={(item, index) => index.toString()}
       renderItem={({ item, index }) => (
         <TouchableOpacity onPress={() => handleItemPress(index)}>
-          <CategoryItem title={item.title} image={item.image} />
+          <CategoryItem name={item.name} image={item.image} />
         </TouchableOpacity>
       )}
     />

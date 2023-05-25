@@ -11,29 +11,32 @@ import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
 import BookItem from "../components/BookItem";
-import booksData from "./data/books.json";
 import booksData2 from "./data/books2.json";
 import categoryData from "./data/category.json";
 import CategoryList from "../components/categoryList";
 import AppText from "../components/AppText";
-import { prepareDataForValidation } from "formik";
 import colors from "../config/colors";
+
+import fetchRecommendedBooks from "../handlers/fetchRecommendedBooks";
+import fetchGeneCategories from "../handlers/fetchGeneCategories";
 
 const HomeScreen = () => {
   const [recommendedBooks, setRecommendedBooks] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
 
   useEffect(() => {
-    fetchRecommendedBooks();
+    fetchRecommendedBooksData();
+    fetchGeneCategoriesData();
   }, []);
 
-  const fetchRecommendedBooks = async () => {
-    try {
-      const response = await fetch("http://192.168.88.102:80/api/fetchRecBooks.php");
-      const data = await response.json();
-      setRecommendedBooks(data);
-    } catch (error) {
-      console.error("Error fetching recommended books:", error);
-    }
+  const fetchRecommendedBooksData = async () => {
+    const data = await fetchRecommendedBooks();
+    setRecommendedBooks(data);
+  };
+
+  const fetchGeneCategoriesData = async () => {
+    const data = await fetchGeneCategories();
+    setCategoryList(data);
   };
 
   const renderItem = ({ item }) => {
@@ -86,7 +89,7 @@ const HomeScreen = () => {
             </TouchableOpacity>
           </View>
           <View style={styles.exploreListContainer}>
-            <CategoryList data={categoryData} onPress={handleCategoryPress} />
+            <CategoryList data={categoryList} onPress={handleCategoryPress} />
           </View>
         </View>
         <View>

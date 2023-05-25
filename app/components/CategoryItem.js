@@ -1,16 +1,17 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 
-const CategoryItem = ({ title, image }) => {
+const CategoryItem = ({ name, image }) => {
+  console.log(name)
   return (
     <View style={styles.categoryContainer}>
       <Image
-        blurRadius={6}
-        source={require("../assets/bookshelve.jpg")}
+        blurRadius={1}
+        source={{uri: image}}
         style={styles.categoryImage}
       />
       <View style={styles.textContainer}>
-        <Text style={styles.categoryText}>{title}</Text>
+        <Text style={styles.categoryText}>{name}</Text>
       </View>
     </View>
   );
