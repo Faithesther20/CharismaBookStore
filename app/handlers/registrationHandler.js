@@ -1,3 +1,4 @@
+//@ts-check
 import { Alert } from "react-native";
 
 export const handleRegistration = (values, navigation) => {
@@ -12,7 +13,7 @@ export const handleRegistration = (values, navigation) => {
   data.append("isAdmin", "false");
 
   // Send an HTTP POST request to the local PHP script172.18.48.1    192.168.107.102:80
-  fetch("http://172.18.48.1:80/api/register.php", {
+  fetch("http://192.168.88.102:80/api/register.php", {
     method: "POST",
     headers: {
       // "Content-Type": "application/json",
@@ -25,7 +26,7 @@ export const handleRegistration = (values, navigation) => {
       console.log(result);
       // Show success alert
       Alert.alert("Registration successful!");
-      navigation.navigate("Welcome");
+      navigation.navigate("Login");
       // Display appropriate feedback to the user
     })
     .catch((error) => {

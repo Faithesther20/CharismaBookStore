@@ -7,14 +7,11 @@ const BookItem = ({ item, onPress }) => {
   return (
     <TouchableOpacity onPress={() => onPress(item)}>
       <View style={styles.bookContainer}>
-        <Image
-          source={require("../assets/clever_lands.jpg")}
-          style={styles.bookImage}
-        />
+        <Image source={{uri: item.image}} style={styles.bookImage} />
         <Text numberOfLines={2} ellipsizeMode="tail" style={styles.bookTitle}>
           {item.title}
         </Text>
-        <Text style={styles.bookPrice}>{item.price}</Text>
+        <Text style={styles.bookPrice}>₦{item.price}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -23,8 +20,7 @@ const BookItem = ({ item, onPress }) => {
 const styles = StyleSheet.create({
   bookContainer: {
     // Add space between books by applying margin
-    margin:7,
-    
+    margin: 7,
   },
 
   bookImage: {
