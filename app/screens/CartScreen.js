@@ -9,6 +9,8 @@ import {
   SwipeableFlatList,
   Dimensions,
 } from "react-native";
+
+import { MaterialIcons } from '@expo/vector-icons';
 import IconButton from "../components/IconButton";
 
 import colors from "../config/colors";
@@ -67,7 +69,8 @@ const CartScreen = () => {
         <TouchableOpacity
           onPress={() => handleRemoveItem(item.id)}
           style={styles.removeItemButton}>
-          <Text style={styles.removeItemButtonText}>Remove</Text>
+            <MaterialIcons  style={styles.removeItemButtonText} name="delete-outline" size={26} color="black" />
+          
         </TouchableOpacity>
       </View>
     </View>
@@ -101,7 +104,7 @@ const CartScreen = () => {
           onPress={() => navigation.navigate("Home")}
           style={styles.icon}
         />
-        <AppText style={styles.title}>Details</AppText>
+        <AppText style={styles.title}>Cart</AppText>
       </View>  
       <FlatList
         data={cartItems}
@@ -134,25 +137,44 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginHorizontal: 20,
     marginVertical:10,
-    borderRadius: 20,
+    borderRadius: 25,
   },
   cartItemContainer: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 12,
     borderWidth: 1,
     borderColor: "#ddd",
-    borderRadius: 20,
+    borderRadius: 25,
     backgroundColor: '#FFFFFF',
   },
-  
+  headingContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    padding:20
+  },
+  icon: {
+    backgroundColor: colors.white,
+    padding: 5,
+    borderRadius: 6,
+    shadowColor: colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.17,
+    shadowRadius: 2.54,
+    elevation: 9,
+  },
   itemImage: {
-    width: 70,
-    height: 110,
+    width: 80,
+    height: 120,
     resizeMode: "cover",
     marginRight: 10,
-    borderRadius: 9,
+    borderRadius: 11,
   },
   itemDetails: {
     flex: 1,
@@ -178,6 +200,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#EEEEEE",
     marginRight: 10,
+    borderRadius:7,
+    elevation:3
   },
   quantityButtonText: {
     fontSize: 20,
@@ -191,11 +215,16 @@ const styles = StyleSheet.create({
   removeItemButton: {
     paddingHorizontal: 10,
     paddingVertical: 5,
-    backgroundColor: "#FF0000",
+    // backgroundColor: "#FF0000",
     borderRadius: 5,
   },
   removeItemButtonText: {
-    color: "#FFFFFF",
+    color: "#FF0000",
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginLeft: "35%",
   },
   totalContainer: {
     flexDirection: "row",
@@ -210,10 +239,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   checkoutButton: {
-    backgroundColor: "#FFCC00",
+    backgroundColor: colors.orange,
     paddingHorizontal: 20,
     paddingVertical: 10,
-    borderRadius: 5,
+    borderRadius: 20,
+    elevation:3
   },
   checkoutButtonText: {
     fontSize: 16,
