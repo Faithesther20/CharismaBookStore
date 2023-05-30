@@ -10,7 +10,7 @@ export const handleLogin = (values, navigation) => {
   formData.append("password", values.password);
 
   // Send an HTTP POST request to the login.php script
-  fetch("http://192.168.88.102:80/api/login.php", {
+  fetch("http://192.168.163.102:80/api/login.php", {
     method: "POST",
     body: formData,
   })

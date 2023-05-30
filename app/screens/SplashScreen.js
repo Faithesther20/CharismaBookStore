@@ -10,6 +10,7 @@ import AppText from "../components/AppText";
 import Screen from "../components/Screen";
 import { color } from "react-native-reanimated";
 import colors from "../config/colors";
+import { useNavigation } from "@react-navigation/native";
 
 // import Urbanist from '../assets/fonts/Urbanist-VariableFont_wght.ttf';
 
@@ -21,6 +22,13 @@ import colors from "../config/colors";
 
 function SplashScreen(props) {
   //loading google ubanist font to project
+
+  const navigation = useNavigation();
+  useEffect(()=>{
+    setTimeout(() => {
+              navigation.navigate("Welcome")                                         
+    }, 3000);
+  })
 
   return (
     <View style={styles.background}>

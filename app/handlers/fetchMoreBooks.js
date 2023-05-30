@@ -1,7 +1,7 @@
-const fetchRecommendedBooks = async () => {
+const fetchMoreBooks = async () => {
     try {
       const response = await fetch(
-        "http://192.168.245.28:80/api/fetchRecBooks.php"
+        "http://192.168.245.28:80/api/fetchMoreBooks.php"
       );
       const data = await response.json();
       return data;
@@ -11,5 +11,5 @@ const fetchRecommendedBooks = async () => {
     }
   };
   
-  export default fetchRecommendedBooks;
+  export default fetchMoreBooks;
   

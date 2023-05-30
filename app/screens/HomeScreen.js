@@ -9,7 +9,9 @@ import {
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
+import BookList from "../components/bookList";
 import BookItem from "../components/BookItem";
 import booksData2 from "./data/books2.json";
 import categoryData from "./data/category.json";
@@ -19,14 +21,17 @@ import colors from "../config/colors";
 
 import fetchRecommendedBooks from "../handlers/fetchRecommendedBooks";
 import fetchGeneCategories from "../handlers/fetchGeneCategories";
+import fetchMoreBooks from "../handlers/fetchMoreBooks";
 
 const HomeScreen = () => {
   const [recommendedBooks, setRecommendedBooks] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
-
+  const [moreBooks, setMoreBooks] = useState([]);
+  const navigation = useNavigation();
   useEffect(() => {
     fetchRecommendedBooksData();
     fetchGeneCategoriesData();
+    fetchMoreBooksData();
   }, []);
 
   const fetchRecommendedBooksData = async () => {
@@ -39,9 +44,15 @@ const HomeScreen = () => {
     setCategoryList(data);
   };
 
-  const renderItem = ({ item }) => {
-    return <BookItem item={item} />;
+  const fetchMoreBooksData = async () => {
+    const data = await fetchMoreBooks();
+    setMoreBooks(data);
   };
+
+  const handleBookPress = (book) => {
+    navigation.navigate("BookDetails", { bookId: book.id });
+    console.log(book.id)
+  }
 
   const handleCategoryPress = (index) => {
     console.log("Category Pressed:", categoryData[index]);
@@ -54,6 +65,7 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
+      {/* heading */}
       <View style={styles.headingContainer}>
         {console.log(recommendedBooks)}
         <View
@@ -69,18 +81,14 @@ const HomeScreen = () => {
           <Feather name="search" size={24} color="black" />
         </TouchableOpacity>
       </View>
+
       <ScrollView showsVerticalScrollIndicator={false}>
+        {/* recommended books */}
         <View style={styles.recommendedContainer}>
           <AppText style={styles.titleText}>Recommended for you</AppText>
-          <FlatList
-            data={recommendedBooks}
-            numColumns={3}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id.toString()}
-            ItemSeparatorComponent={renderSeparator}
-            contentContainerStyle={styles.contentContainer}
-          />
+          <BookList data={recommendedBooks} onPress={handleBookPress} />
         </View>
+        {/* book categories home */}
         <View styles={styles.geneContainer}>
           <View style={[styles.headingContainer, styles.geneHeading]}>
             <AppText style={styles.titleText}>Explore by Gene</AppText>
@@ -92,6 +100,7 @@ const HomeScreen = () => {
             <CategoryList data={categoryList} onPress={handleCategoryPress} />
           </View>
         </View>
+        {/* More books showing random books */}
         <View>
           <View style={[styles.headingContainer, styles.geneHeading]}>
             <AppText style={styles.titleText}>More for You</AppText>
@@ -99,14 +108,7 @@ const HomeScreen = () => {
               <Ionicons name="arrow-forward" size={24} color={colors.orange} />
             </TouchableOpacity>
           </View>
-          <FlatList
-            data={booksData2}
-            numColumns={3}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id.toString()}
-            ItemSeparatorComponent={renderSeparator}
-            contentContainerStyle={styles.contentContainer}
-          />
+          <BookList data={moreBooks} />
         </View>
       </ScrollView>
     </View>
@@ -130,7 +132,9 @@ const styles = StyleSheet.create({
   },
   exploreListContainer: {
     paddingVertical: 10,
+    backgroundColor: colors.lightOrange,
   },
+
   geneHeading: {
     paddingHorizontal: 0,
     paddingRight: 10,

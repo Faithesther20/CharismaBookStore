@@ -2,12 +2,12 @@ import React from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 
 const BookItem = ({ item, onPress }) => {
-  const imagePath = item.image; // Assuming `item.image` contains the relative path to the image file
-
+  // Assuming `item.image` contains the relative path to the image file
+  // const { title, author, bookId } = item;
   return (
     <TouchableOpacity onPress={() => onPress(item)}>
       <View style={styles.bookContainer}>
-        <Image source={{uri: item.image}} style={styles.bookImage} />
+        <Image source={{ uri: item.image }} style={styles.bookImage} />
         <Text numberOfLines={2} ellipsizeMode="tail" style={styles.bookTitle}>
           {item.title}
         </Text>
@@ -19,8 +19,16 @@ const BookItem = ({ item, onPress }) => {
 
 const styles = StyleSheet.create({
   bookContainer: {
-    // Add space between books by applying margin
+    // Add space between books by applying margin                                                                                                                                                                                                                                                                                         
     margin: 7,
+    shadowColor: "#d0cccc",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.17,
+    shadowRadius: 2.54,
+    elevation: 3,
   },
 
   bookImage: {
