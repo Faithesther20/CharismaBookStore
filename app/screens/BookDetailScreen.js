@@ -9,9 +9,12 @@ import AppText from "../components/AppText";
 import IconButton from "../components/IconButton";
 import BookItem from "../components/BookItem";
 import AppButton from "../components/AppButton";
-import { color } from "react-native-reanimated";
 
-const BookDetailScreen = ({ navigation,route }) => {
+import { addToCart } from "../redux/features/cart/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+
+const BookDetailScreen = ({ navigation, route }) => {
+  const dispatch = useDispatch();
   const { bookId } = route.params;
   const [bookDetails, setBookDetails] = useState(null);
 
@@ -25,7 +28,7 @@ const BookDetailScreen = ({ navigation,route }) => {
   const fetchBookDetails = async () => {
     try {
       const response = await fetch(
-        "http://192.168.245.28:80/api/bookDetails.php",
+        "http://192.168.151.102:80/api/bookDetails.php",
         {
           method: "POST",
           // headers: {
@@ -40,12 +43,11 @@ const BookDetailScreen = ({ navigation,route }) => {
     } catch (error) {
       console.error("Error fetching book details:", error);
     }
-    
   };
 
-  const addToCart = () => {
-    navigation.navigate("Cart", { book: bookDetails });
-  };
+  // const addToCart = () => {
+  //   navigation.navigate("Cart", { book: bookDetails });
+  // };
 
   useEffect(() => {
     console.log("Book Details:", bookDetails);
@@ -65,85 +67,91 @@ const BookDetailScreen = ({ navigation,route }) => {
       </View>
       {/* book styles */}
       {bookDetails ? (
-      <View style={styles.detailContainer}>
-        <View style={styles.bookContainer}>
-          <Image
-            style={styles.bookImage}
-            source={{uri: bookDetails.bookImage}}
-          />
-          <View style={styles.bookDesciption}>
-            <AppText  numberOfLines={2} style={styles.bookTitle}>{bookDetails.name}</AppText>
-            <View style={styles.starContainer}>
-              <AntDesign
-                name="star"
-                size={24}
-                color="black"
-                style={styles.star}
-              />
-              <AntDesign
-                name="star"
-                size={24}
-                color="black"
-                style={styles.star}
-              />
-              <AntDesign
-                name="star"
-                size={24}
-                color="black"
-                style={styles.star}
-              />
-              <AntDesign
-                name="star"
-                size={24}
-                color="black"
-                style={styles.star}
-              />
-              <AntDesign
-                name="staro"
-                size={24}
-                color="black"
-                style={styles.star}
-              />
+        <View style={styles.detailContainer}>
+          <View style={styles.bookContainer}>
+            <Image
+              style={styles.bookImage}
+              source={{ uri: bookDetails.bookImage }}
+            />
+            <View style={styles.bookDesciption}>
+              <AppText numberOfLines={2} style={styles.bookTitle}>
+                {bookDetails.name}
+              </AppText>
+              <View style={styles.starContainer}>
+                <AntDesign
+                  name="star"
+                  size={24}
+                  color="black"
+                  style={styles.star}
+                />
+                <AntDesign
+                  name="star"
+                  size={24}
+                  color="black"
+                  style={styles.star}
+                />
+                <AntDesign
+                  name="star"
+                  size={24}
+                  color="black"
+                  style={styles.star}
+                />
+                <AntDesign
+                  name="star"
+                  size={24}
+                  color="black"
+                  style={styles.star}
+                />
+                <AntDesign
+                  name="staro"
+                  size={24}
+                  color="black"
+                  style={styles.star}
+                />
+              </View>
+              <AppText
+                numberOfLines={3}
+                ellipsizeMode="tail"
+                style={styles.bookCategoryName}>
+                {bookDetails.category}
+              </AppText>
+              <AppText
+                numberOfLines={3}
+                ellipsizeMode="tail"
+                style={styles.bookCategoryName}>
+                Price:₦{bookDetails.price}
+              </AppText>
             </View>
-            <AppText
-              numberOfLines={3}
-              ellipsizeMode="tail"
-              style={styles.bookCategoryName}>
-              {bookDetails.category}
-            </AppText>
-            <AppText
-              numberOfLines={3}
-              ellipsizeMode="tail"
-              style={styles.bookCategoryName}>
-              Price:₦{bookDetails.price}
+          </View>
+          {/* horizontal seperation */}
+          <View style={styles.bookDetails}>
+            <AppText style={styles.about}>About the book</AppText>
+            <AppText style={styles.aboutContainer}>
+              {bookDetails.description}
             </AppText>
           </View>
-        </View>
-        {/* horizontal seperation */}
-        <View style={styles.bookDetails}>
-          <AppText style={styles.about}>About the book</AppText>
-          <AppText style={styles.aboutContainer}>
-            {bookDetails.description}
-          </AppText>
-        </View>
 
-        <AppButton
-          title="Add to cart"
-          style={{ backgroundColor: colors.lightOrange }}
-          onPress={addToCart}
-        />
-      </View>
+          <AppButton
+            title="Add to cart"
+            style={{ backgroundColor: colors.lightOrange }}
+            onPress={() => {
+              dispatch(addToCart(bookDetails));
+
+              navigation.navigate("Cart");
+            }}
+          />
+        </View>
       ) : (
         <Text>Loading...</Text>
       )}
     </View>
-    
   );
 };
 
 const styles = StyleSheet.create({
   about: {
-    fontSize: 18,
+    fontSize: 23,
+    // fontWeight:"bold"
   },
   aboutContainer: {
     paddingVertical: 10,
@@ -171,11 +179,11 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     padding: 25,
     paddingRight: 15,
-    borderBottomEndRadius: 20,
-    borderTopRightRadius: 20,
+    // borderBottomEndRadius: 20,
+    // borderTopRightRadius: 20,
   },
   bookDetails: {
-    backgroundColor: colors.lightGrey,
+    backgroundColor: colors.lightOrange,
     width: "100%",
     height: "50%",
     marginTop: 20,
@@ -186,13 +194,13 @@ const styles = StyleSheet.create({
     width: 130,
     height: 200,
     borderRadius: 10,
-  },                                                                                                                               
+  },
   bookTitle: {
     fontSize: 19,
   },
   container: {
     flex: 1,
-    backgroundColor: colors.lightOrange,
+    backgroundColor: colors.white,
     padding: 20,
   },
   headingContainer: {
@@ -208,20 +216,20 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: 10,
     padding: 17,
-    shadowColor: "#d0cccc",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.17,
     shadowRadius: 2.54,
-    elevation: 3,
+    elevation: 4,
   },
   icon: {
     backgroundColor: colors.white,
     padding: 5,
     borderRadius: 6,
-    shadowColor: "#d0cccc",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,

@@ -8,66 +8,107 @@ import {
   StyleSheet,
   SwipeableFlatList,
   Dimensions,
+  Alert,
 } from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import IconButton from "../components/IconButton";
+
+import { useDispatch, useSelector } from "react-redux";
+import {
+  increment,
+  decrement,
+  clear,
+  removeItem,
+} from "../redux/features/cart/cartSlice";
+import { cartTotalPriceSelector } from "../redux/selectors";
 
 import colors from "../config/colors";
 import AppText from "../components/AppText";
 
 const { width } = Dimensions.get("window");
 
-const CartScreen = ({navigation}) => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Book 1",
-      price: 9.99,
-      quantity: 1,
-      image: require("../assets/clever_lands.jpg"),
-    },
-    {
-      id: 2,
-      name: "Book 2",
-      price: 14.99,
-      quantity: 2,
-      image: require("../assets/clever_lands.jpg"),
-    },
-    // Add more cart items here...
-  ]);
+const CartScreen = ({ navigation }) => {
+  // const [cartItems, setCartItems] = useState([
+  //   {
+  //     id: 1,
+  //     name: "Book 1",
+  //     price: 9.99,
+  //     quantity: 1,
+  //     image: require("../assets/clever_lands.jpg"),
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Book 2",
+  //     price: 14.99,
+  //     quantity: 2,
+  //     image: require("../assets/clever_lands.jpg"),
+  //   },
+  //   // Add more cart items here...
+  // ]);
 
-  const calculateTotalPrice = () => {
-    let total = 0;
-    cartItems.forEach((item) => {
-      total += item.price * item.quantity;
-    });
-    return total.toFixed(2);
-  };
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart);
+  const totalPrice = useSelector(cartTotalPriceSelector);
+
+  console.log("Cart Item:", cart);
+  // const calculateTotalPrice = () => {
+  //   let total = 0;
+  //   cartItems.forEach((item) => {
+  //     total += item.price * item.quantity;
+  //   });
+  //   return total.toFixed(2);
+  // };
 
   const renderCartItem = ({ item }) => (
     <View style={styles.cartItemWrapper}>
+      {/* {console.log(item)} */}
       <View style={styles.cartItemContainer}>
-        <Image source={item.image} style={styles.itemImage} />
+        <Image source={{ uri: item.bookImage }} style={styles.itemImage} />
         <View style={styles.itemDetails}>
           <Text style={styles.itemName}>{item.name}</Text>
-          <Text style={styles.itemPrice}>${item.price.toFixed(2)}</Text>
+          <Text style={styles.itemPrice}>${item.price}</Text>
           <View style={styles.quantityContainer}>
             <TouchableOpacity
-              onPress={() => handleQuantityChange(item.id, -1)}
+              onPress={() => {
+                if (item.orderQuantity === 1) {
+                  dispatch(removeItem(item.bookId));
+
+                  console.log("removed");
+                  return;
+                } else {
+                  dispatch(decrement(item.bookId));
+                }
+              }}
               style={styles.quantityButton}>
               <Text style={styles.quantityButtonText}>-</Text>
             </TouchableOpacity>
-            <Text style={styles.quantity}>{item.quantity}</Text>
+            <Text style={styles.quantity}>
+              {/* ensures that he item is not more than quantity in stock */}
+              {item.orderQuantity}
+            </Text>
             <TouchableOpacity
-              onPress={() => handleQuantityChange(item.id, 1)}
+              onPress={() => {
+                if (item.orderQuantity >= item.quantity) {
+                  dispatch(decrement(item.bookId));
+                   Alert.alert(
+                    `Sorry, the quantity cannot be more than ${item.quantity}`
+                  );
+                  return;
+                } else {
+                  dispatch(increment(item.bookId));
+                }
+                console.log(item)
+              }}
               style={styles.quantityButton}>
               <Text style={styles.quantityButtonText}>+</Text>
             </TouchableOpacity>
           </View>
         </View>
         <TouchableOpacity
-          onPress={() => handleRemoveItem(item.id)}
+          onPress={() => {
+            dispatch(removeItem(item.bookId));
+          }}
           style={styles.removeItemButton}>
           <MaterialIcons
             style={styles.removeItemButtonText}
@@ -80,24 +121,24 @@ const CartScreen = ({navigation}) => {
     </View>
   );
 
-  const handleQuantityChange = (itemId, value) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) => {
-        if (item.id === itemId) {
-          const newQuantity = item.quantity + value;
-          return {
-            ...item,
-            quantity: newQuantity >= 0 ? newQuantity : 0,
-          };
-        }
-        return item;
-      })
-    );
-  };
+  // const handleQuantityChange = (itemId, value) => {
+  //   setCartItems((prevItems) =>
+  //     prevItems.map((item) => {
+  //       if (item.bookId === itemId) {
+  //         const newQuantity = item.quantity + value;
+  //         return {
+  //           ...item,
+  //           quantity: newQuantity >= 0 ? newQuantity : 0,
+  //         };
+  //       }
+  //       return item;
+  //     })
+  //   );
+  // };
 
-  const handleRemoveItem = (itemId) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
-  };
+  // const handleRemoveItem = (itemId) => {
+  //   setCartItems((prevItems) => prevItems.filter((item) => item.bookId !== itemId));
+  // };
 
   return (
     <View style={styles.container}>
@@ -105,18 +146,18 @@ const CartScreen = ({navigation}) => {
         <IconButton
           icon={"keyboard-backspace"}
           iconStyle={undefined}
-          onPress={() => navigation.navigate("BookDetails")}
+          onPress={() => navigation.navigate("Home")}
           style={styles.icon}
         />
         <AppText style={styles.title}>Cart</AppText>
       </View>
       <FlatList
-        data={cartItems}
-        keyExtractor={(item) => item.id.toString()}
+        data={cart}
+        keyExtractor={(item) => item.bookId}
         renderItem={renderCartItem}
       />
       <View style={styles.totalContainer}>
-        <Text style={styles.totalText}>Total: ${calculateTotalPrice()}</Text>
+        <Text style={styles.totalText}>Total: ${totalPrice}</Text>
         <TouchableOpacity style={styles.checkoutButton}>
           <Text style={styles.checkoutButtonText}>Checkout</Text>
         </TouchableOpacity>
