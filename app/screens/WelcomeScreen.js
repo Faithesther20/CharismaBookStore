@@ -16,7 +16,7 @@ function WelcomeScreen({navigation}) {
       <View style={styles.content}>
         <View style={styles.headingContainer}>
           <AppText style={styles.heading}>Welcome to </AppText>
-          <AppText style={[styles.heading, styles.logo]}>Charisma 👋</AppText>
+          <AppText style={[styles.heading, styles.logo]}>Charism 👋</AppText>
         </View>
         <View>
           <AppText style={styles.welcomeText}>

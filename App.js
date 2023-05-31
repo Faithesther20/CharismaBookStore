@@ -12,14 +12,26 @@ import Screen from "./app/components/Screen";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import myTheme from "./app/navigation/navigationTheme";
+import HomeScreen from "./app/screens/HomeScreen";
+import BookDetailScreen from "./app/screens/BookDetailScreen";
+import CartScreen from "./app/screens/CartScreen";
+import { Provider } from "react-redux";
+import store from "./app/redux/store";
 
 export default function App() {
   return (
-    <NavigationContainer theme={myTheme}>
-      <Screen>
-        <AuthNavigator />
-      </Screen>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer theme={myTheme}>
+        <Screen>
+          <AuthNavigator />
+        </Screen>
+      </NavigationContainer>
+    </Provider>
+
+    // // <Screen>
+    //   {/* <CartScreen /> */}
+    // {/* //   <BookDetailScreen/> */}
+    // {/* </Screen> */}
   );
 }
 
