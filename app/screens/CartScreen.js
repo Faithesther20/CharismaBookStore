@@ -10,7 +10,7 @@ import {
   Dimensions,
 } from "react-native";
 
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from "@expo/vector-icons";
 import IconButton from "../components/IconButton";
 
 import colors from "../config/colors";
@@ -18,7 +18,7 @@ import AppText from "../components/AppText";
 
 const { width } = Dimensions.get("window");
 
-const CartScreen = () => {
+const CartScreen = ({navigation}) => {
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
@@ -69,8 +69,12 @@ const CartScreen = () => {
         <TouchableOpacity
           onPress={() => handleRemoveItem(item.id)}
           style={styles.removeItemButton}>
-            <MaterialIcons  style={styles.removeItemButtonText} name="delete-outline" size={26} color="black" />
-          
+          <MaterialIcons
+            style={styles.removeItemButtonText}
+            name="delete-outline"
+            size={26}
+            color="black"
+          />
         </TouchableOpacity>
       </View>
     </View>
@@ -97,15 +101,15 @@ const CartScreen = () => {
 
   return (
     <View style={styles.container}>
-       <View style={styles.headingContainer}>
+      <View style={styles.headingContainer}>
         <IconButton
           icon={"keyboard-backspace"}
           iconStyle={undefined}
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => navigation.navigate("BookDetails")}
           style={styles.icon}
         />
         <AppText style={styles.title}>Cart</AppText>
-      </View>  
+      </View>
       <FlatList
         data={cartItems}
         keyExtractor={(item) => item.id.toString()}
@@ -127,16 +131,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   cartItemWrapper: {
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 1,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
     elevation: 5,
     marginHorizontal: 20,
-    marginVertical:10,
+    marginVertical: 10,
     borderRadius: 25,
   },
   cartItemContainer: {
@@ -147,14 +151,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ddd",
     borderRadius: 25,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
   },
   headingContainer: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    padding:20
+    padding: 20,
   },
   icon: {
     backgroundColor: colors.white,
@@ -200,8 +204,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#EEEEEE",
     marginRight: 10,
-    borderRadius:7,
-    elevation:3
+    borderRadius: 7,
+    elevation: 3,
   },
   quantityButtonText: {
     fontSize: 20,
@@ -243,7 +247,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 20,
-    elevation:3
+    elevation: 3,
   },
   checkoutButtonText: {
     fontSize: 16,
