@@ -1,7 +1,7 @@
 const fetchGeneCategories = async () => {
     try {
       const response = await fetch(
-        "http://192.168.151.102:80/api/fetchGeneCategory.php"
+        "https://7629-197-210-77-5.ngrok-free.app/api/fetchGeneCategory.php"
       );
       const data = await response.json();
       return data;

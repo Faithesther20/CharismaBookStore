@@ -1,11 +1,10 @@
-
 import React from "react";
 import { View, StyleSheet, Image } from "react-native";
 import colors from "../config/colors";
 import AppText from "../components/AppText";
 import AppButton from "../components/AppButton";
 
-function WelcomeScreen({navigation}) {
+function WelcomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Image
@@ -20,19 +19,20 @@ function WelcomeScreen({navigation}) {
         </View>
         <View>
           <AppText style={styles.welcomeText}>
-            The Number One Ebook Store Application for Inspiring Books in this
+            The an Ebook Store Application for Inspiring Books in this
             Century
           </AppText>
         </View>
         <View style={styles.buttonContainer}>
-          <AppButton
+          {/* <AppButton
             customStyle={styles.googleButton}
             customTextStyle={styles.googleButtonText}
             iconImage={require("../assets/google.png")}
             title={"Continue with Google"}
-          />
-          <AppButton title={"Get Started"} 
-          onPress={() => navigation.navigate("Register")}
+          /> */}
+          <AppButton
+            title={"Get Started"}
+            onPress={() => navigation.navigate("Register")}
           />
 
           <AppButton

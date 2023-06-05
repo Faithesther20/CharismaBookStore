@@ -51,11 +51,11 @@ const HomeScreen = () => {
 
   const handleBookPress = (book) => {
     navigation.navigate("BookDetails", { bookId: book.id });
-    console.log(book.id)
+    
   }
 
   const handleCategoryPress = (index) => {
-    console.log("Category Pressed:", categoryData[index]);
+    // console.log("Category Pressed:", categoryData[index]);
     // Add your custom logic here
   };
 
@@ -67,7 +67,7 @@ const HomeScreen = () => {
     <View style={styles.container}>
       {/* heading */}
       <View style={styles.headingContainer}>
-        {console.log(recommendedBooks)}
+        {/* {console.log(recommendedBooks)} */}
         <View
           style={{
             display: "flex",
@@ -77,9 +77,7 @@ const HomeScreen = () => {
           <FontAwesome5 name="book" size={24} style={styles.bookIcon} />
           <AppText style={styles.textStyle}>Charism</AppText>
         </View>
-        <TouchableOpacity style={styles.searchContainer}>
-          <Feather name="search" size={24} color="black" />
-        </TouchableOpacity>
+       
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -108,7 +106,7 @@ const HomeScreen = () => {
               <Ionicons name="arrow-forward" size={24} color={colors.orange} />
             </TouchableOpacity>
           </View>
-          <BookList data={moreBooks} />
+          <BookList data={moreBooks} onPress={handleBookPress}/>
         </View>
       </ScrollView>
     </View>

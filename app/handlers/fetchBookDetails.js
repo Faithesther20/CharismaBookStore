@@ -4,7 +4,7 @@ const fetchBookDetails = async (bookId) => {
     formData.append("bookId", bookId);
 
     const response = await fetch(
-      "http://192.168.245.28:80/api/bookDetails.php",
+      "http://192.168.11.102:80/api/bookDetails.php",
       {
         method: "POST",
         body: formData,
