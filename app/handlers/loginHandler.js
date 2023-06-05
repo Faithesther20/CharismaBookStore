@@ -1,6 +1,13 @@
 import { Alert } from "react-native";
-
-export const handleLogin = (values, navigation) => {
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/features/cart/userSlice";
+import { setEmail} from "../redux/features/cart/emailSlice";
+export const handleLogin = (
+  values,
+  navigation,
+  userIdDispatch,
+  emailDispatch
+) => {
   // Create a new FormData object
   console.log(values);
   const formData = new FormData();
@@ -10,7 +17,7 @@ export const handleLogin = (values, navigation) => {
   formData.append("password", values.password);
 
   // Send an HTTP POST request to the login.php script
-  fetch("http://192.168.42.102:80/api/login.php", {
+  fetch("https://7629-197-210-77-5.ngrok-free.app/api/login.php", {
     method: "POST",
     body: formData,
   })
@@ -21,14 +28,17 @@ export const handleLogin = (values, navigation) => {
       // Show success or error message
 
       // Perform further actions based on the login result
-      if (result.length > 0 && result[0].message === "Login successful!") {
-        Alert.alert("Success", result[0].message);
+      if (result.userId) {
+        Alert.alert("Success", result.message);
+        // Access the dispatch function from Redux
+        userIdDispatch(setUser(result.userId));
+        emailDispatch(setEmail(values.email)); // Dispatch the setUser action to set the user ID in the store
         navigation.navigate("Home");
         // Redirect to the home screen or perform any desired actions
       } else {
         Alert.alert(
           "Error",
-          result[0].message || "Login failed. Please try again."
+          result.message || "Login failed. Please try again."
         );
         // Clear the username and password fields or show error message
       }
@@ -39,5 +49,3 @@ export const handleLogin = (values, navigation) => {
       Alert.alert("Login failed. Please try again.");
     });
 };
-
-// export default handleLogin;

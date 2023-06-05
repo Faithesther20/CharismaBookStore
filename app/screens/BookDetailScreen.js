@@ -28,7 +28,7 @@ const BookDetailScreen = ({ navigation, route }) => {
   const fetchBookDetails = async () => {
     try {
       const response = await fetch(
-        "http://192.168.151.102:80/api/bookDetails.php",
+        "https://7629-197-210-77-5.ngrok-free.app/api/bookDetails.php",
         {
           method: "POST",
           // headers: {
@@ -48,10 +48,6 @@ const BookDetailScreen = ({ navigation, route }) => {
   // const addToCart = () => {
   //   navigation.navigate("Cart", { book: bookDetails });
   // };
-
-  useEffect(() => {
-    console.log("Book Details:", bookDetails);
-  }, [bookDetails]);
 
   return (
     <View style={styles.container}>

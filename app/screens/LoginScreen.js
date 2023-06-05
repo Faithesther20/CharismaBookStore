@@ -9,11 +9,14 @@ import AppButton from "../components/AppButton";
 
 import colors from "../config/colors";
 import defaultStyles from "../config/styles";
+import { useDispatch } from "react-redux";
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import KeyboardAvoiding from "../components/KeyBoardAvoiding";
 import { handleLogin } from "../handlers/loginHandler";
 
 function LoginScreen({ navigation }) {
+  const userIdDispatch= useDispatch();
+  const emailDispatch = useDispatch();
   // The loginValidationSchema for the input values by the user with yup
   const loginValidationSchema = Yup.object().shape({
     email: Yup.string().required().email().label("Email"),
@@ -27,7 +30,7 @@ function LoginScreen({ navigation }) {
   });
 
   const handleLoginSubmit = (values) => {
-    handleLogin(values, navigation); // Call handleLogin function
+    handleLogin(values, navigation, userIdDispatch, emailDispatch); // Call handleLogin function
   };
 
   return (

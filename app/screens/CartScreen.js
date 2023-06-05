@@ -25,10 +25,12 @@ import { cartTotalPriceSelector } from "../redux/selectors";
 
 import colors from "../config/colors";
 import AppText from "../components/AppText";
+import { useNavigation } from "@react-navigation/core";
 
 const { width } = Dimensions.get("window");
 
-const CartScreen = ({ navigation }) => {
+const CartScreen = () => {
+  const navigation = useNavigation();
   // const [cartItems, setCartItems] = useState([
   //   {
   //     id: 1,
@@ -67,7 +69,7 @@ const CartScreen = ({ navigation }) => {
         <Image source={{ uri: item.bookImage }} style={styles.itemImage} />
         <View style={styles.itemDetails}>
           <Text style={styles.itemName}>{item.name}</Text>
-          <Text style={styles.itemPrice}>${item.price}</Text>
+          <Text style={styles.itemPrice}>₦{item.price}</Text>
           <View style={styles.quantityContainer}>
             <TouchableOpacity
               onPress={() => {
@@ -91,14 +93,14 @@ const CartScreen = ({ navigation }) => {
               onPress={() => {
                 if (item.orderQuantity >= item.quantity) {
                   dispatch(decrement(item.bookId));
-                   Alert.alert(
+                  Alert.alert(
                     `Sorry, the quantity cannot be more than ${item.quantity}`
                   );
                   return;
                 } else {
                   dispatch(increment(item.bookId));
                 }
-                console.log(item)
+                console.log(item);
               }}
               style={styles.quantityButton}>
               <Text style={styles.quantityButtonText}>+</Text>
@@ -143,6 +145,7 @@ const CartScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.headingContainer}>
+        {console.log(cart)}
         <IconButton
           icon={"keyboard-backspace"}
           iconStyle={undefined}
@@ -157,8 +160,10 @@ const CartScreen = ({ navigation }) => {
         renderItem={renderCartItem}
       />
       <View style={styles.totalContainer}>
-        <Text style={styles.totalText}>Total: ${totalPrice}</Text>
-        <TouchableOpacity style={styles.checkoutButton}>
+        <Text style={styles.totalText}>Total: ₦{totalPrice}</Text>
+        <TouchableOpacity
+          style={styles.checkoutButton}
+          onPress={() => navigation.navigate("Payment")}>
           <Text style={styles.checkoutButtonText}>Checkout</Text>
         </TouchableOpacity>
       </View>
