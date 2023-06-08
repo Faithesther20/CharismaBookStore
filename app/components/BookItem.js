@@ -11,7 +11,8 @@ const BookItem = ({ item, onPress }) => {
         <Text numberOfLines={2} ellipsizeMode="tail" style={styles.bookTitle}>
           {item.title}
         </Text>
-        <Text style={styles.bookPrice}>₦{item.price}</Text>
+        <Text style={styles.bookPrice}>
+          {item.price}</Text>
       </View>
     </TouchableOpacity>
   );

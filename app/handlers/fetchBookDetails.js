@@ -1,10 +1,12 @@
+import headerTitle from "./header";
+
 const fetchBookDetails = async (bookId) => {
   try {
     const formData = new FormData();
     formData.append("bookId", bookId);
 
     const response = await fetch(
-      "http://192.168.11.102:80/api/bookDetails.php",
+      `${headerTitle}/api/bookDetails.php`,
       {
         method: "POST",
         body: formData,
