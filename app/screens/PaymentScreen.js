@@ -12,16 +12,14 @@ import { cartTotalPriceSelector } from "../redux/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { color } from "react-native-reanimated";
 import colors from "../config/colors";
+import headerTitle from "../handlers/header";
 
 import { clear } from "../redux/features/cart/cartSlice";
 
 import { Paystack, paystackProps } from "react-native-paystack-webview";
 
 const PaymentScreen = () => {
-  // const isValidEmail = (email) => {
-  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  //   return emailRegex.test(email);
-  // };
+
   const paystackWebViewRef = useRef(paystackProps.PayStackRef);
   const totalPrice = useSelector(cartTotalPriceSelector);
   const userId = useSelector((state) => state.user.userId);
@@ -32,13 +30,13 @@ const PaymentScreen = () => {
       userId: userId,
       bookId: cartItem.bookId,
       name: cartItem.name,
-      quantity: cartItem.quantity,
+      quantity: cartItem.orderQuantity,
       price: cartItem.price,
     };
   });
 
   const insertOrders = () => {
-    const url = "http://192.168.11.102:80/api/insertOrders.php"; // Replace with the actual URL of your PHP page
+    const url = `${headerTitle}/api/insertOrders.php`;
 
     const requestOptions = {
       method: "POST",
@@ -46,10 +44,15 @@ const PaymentScreen = () => {
       body: JSON.stringify({ cartItems }),
     };
 
+    console.log("Before fetch request", cartItems); // Debugging statement
+
     fetch(url, requestOptions)
-      .then((response) => response.json())
+      .then((response) => {
+        console.log("Response received"); // Debugging statement
+        return response.json();
+      })
       .then((result) => {
-        console.log(result); // Handle the response from the PHP page
+        console.log("Result:", result); // Debugging statement
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -68,7 +71,7 @@ const PaymentScreen = () => {
         onSuccess={(res) => {
           // handle response here
           Alert.alert("Payment successful");
-          console.log(cartItems);
+          console.log("myItem", { cartItems });
           insertOrders();
         }}
         ref={paystackWebViewRef}

@@ -26,41 +26,60 @@ import { cartTotalPriceSelector } from "../redux/selectors";
 import colors from "../config/colors";
 import AppText from "../components/AppText";
 import { useNavigation } from "@react-navigation/core";
+import headerTitle from "../handlers/header";
 
 const { width } = Dimensions.get("window");
 
 const CartScreen = () => {
   const navigation = useNavigation();
-  // const [cartItems, setCartItems] = useState([
-  //   {
-  //     id: 1,
-  //     name: "Book 1",
-  //     price: 9.99,
-  //     quantity: 1,
-  //     image: require("../assets/clever_lands.jpg"),
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Book 2",
-  //     price: 14.99,
-  //     quantity: 2,
-  //     image: require("../assets/clever_lands.jpg"),
-  //   },
-  //   // Add more cart items here...
-  // ]);
+  const userId = useSelector((state) => state.user.userId);
 
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const totalPrice = useSelector(cartTotalPriceSelector);
 
   console.log("Cart Item:", cart);
-  // const calculateTotalPrice = () => {
-  //   let total = 0;
-  //   cartItems.forEach((item) => {
-  //     total += item.price * item.quantity;
-  //   });
-  //   return total.toFixed(2);
-  // };
+
+  const checkBillingAddress = async () => {
+    console.log("got here");
+    try {
+      console.log("got here");
+      const formData = new FormData();
+      formData.append("userId", userId);
+
+      // Perform a database query to check if the userId exists in the billingAddress table
+      const response = await fetch(
+        `${headerTitle}/api/billingAddressCheck.php`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Request failed");
+        console.log("problem");
+      }
+
+      const data = await response.json();
+      console.log(data);
+
+      // Check if the userId exists in the billingAddress table
+      const count = data.count;
+
+      if (count > 0) {
+        // If the userId exists, navigate to the Payment screen
+        navigation.navigate("Payment");
+        console.log("reached here");
+      } else {
+        // If the userId doesn't exist, navigate to the BillingAddress screen
+        navigation.navigate("BillingAddress");
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle any errors that occur during the request
+    }
+  };
 
   const renderCartItem = ({ item }) => (
     <View style={styles.cartItemWrapper}>
@@ -123,25 +142,6 @@ const CartScreen = () => {
     </View>
   );
 
-  // const handleQuantityChange = (itemId, value) => {
-  //   setCartItems((prevItems) =>
-  //     prevItems.map((item) => {
-  //       if (item.bookId === itemId) {
-  //         const newQuantity = item.quantity + value;
-  //         return {
-  //           ...item,
-  //           quantity: newQuantity >= 0 ? newQuantity : 0,
-  //         };
-  //       }
-  //       return item;
-  //     })
-  //   );
-  // };
-
-  // const handleRemoveItem = (itemId) => {
-  //   setCartItems((prevItems) => prevItems.filter((item) => item.bookId !== itemId));
-  // };
-
   return (
     <View style={styles.container}>
       <View style={styles.headingContainer}>
@@ -163,7 +163,7 @@ const CartScreen = () => {
         <Text style={styles.totalText}>Total: ₦{totalPrice}</Text>
         <TouchableOpacity
           style={styles.checkoutButton}
-          onPress={() => navigation.navigate("Payment")}>
+          onPress={checkBillingAddress}>
           <Text style={styles.checkoutButtonText}>Checkout</Text>
         </TouchableOpacity>
       </View>

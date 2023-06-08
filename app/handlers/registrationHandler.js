@@ -1,5 +1,7 @@
 //@ts-check
 import { Alert } from "react-native";
+import header from "./header";
+import headerTitle from "./header";
 
 export const handleRegistration = (values, navigation) => {
   // Create an object with the user input data
@@ -13,7 +15,7 @@ export const handleRegistration = (values, navigation) => {
   data.append("isAdmin", "false");
 
   // Send an HTTP POST request to the local PHP script172.18.48.1    192.168.107.102:80
-  fetch("https://7629-197-210-77-5.ngrok-free.app/api/register.php", {
+  fetch(`${headerTitle}/api/register.php`, {
     method: "POST",
     headers: {
       // "Content-Type": "application/json",

@@ -1,4 +1,5 @@
 import { Alert } from "react-native";
+import headerTitle from "./header";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/features/cart/userSlice";
 import { setEmail} from "../redux/features/cart/emailSlice";
@@ -17,7 +18,7 @@ export const handleLogin = (
   formData.append("password", values.password);
 
   // Send an HTTP POST request to the login.php script
-  fetch("https://7629-197-210-77-5.ngrok-free.app/api/login.php", {
+  fetch(`${headerTitle}/api/login.php`, {
     method: "POST",
     body: formData,
   })

@@ -8,12 +8,13 @@ import SplashScreen from "../screens/SplashScreen";
 import BookDetailScreen from "../screens/BookDetailScreen";
 import CartScreen from "../screens/CartScreen";
 import PaymentScreen from "../screens/PaymentScreen";
+import BillingAddressScreen from "../screens/BillingAddressScreen";
 
 const Stack = createStackNavigator();
 
 const AuthNavigator = () => (
   <Stack.Navigator>
-   <Stack.Screen
+    <Stack.Screen
       name="Splash"
       component={SplashScreen}
       options={{ headerShown: false }}
@@ -24,6 +25,7 @@ const AuthNavigator = () => (
       component={WelcomeScreen}
       options={{ headerShown: false }}
     />
+
     <Stack.Screen
       name="Login"
       component={LoginScreen}
@@ -33,7 +35,7 @@ const AuthNavigator = () => (
       name="Register"
       component={RegistrationScreen}
       options={{ headerShown: false }}
-    /> 
+    />
 
     <Stack.Screen
       name="Home"
@@ -50,6 +52,12 @@ const AuthNavigator = () => (
     <Stack.Screen
       name="Cart"
       component={CartScreen}
+      options={{ headerShown: false }}
+    />
+    
+     <Stack.Screen
+      name="BillingAddress"
+      component={BillingAddressScreen}
       options={{ headerShown: false }}
     />
 

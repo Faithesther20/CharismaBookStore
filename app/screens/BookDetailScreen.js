@@ -9,6 +9,7 @@ import AppText from "../components/AppText";
 import IconButton from "../components/IconButton";
 import BookItem from "../components/BookItem";
 import AppButton from "../components/AppButton";
+import headerTitle from "../handlers/header";
 
 import { addToCart } from "../redux/features/cart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,7 +29,7 @@ const BookDetailScreen = ({ navigation, route }) => {
   const fetchBookDetails = async () => {
     try {
       const response = await fetch(
-        "https://7629-197-210-77-5.ngrok-free.app/api/bookDetails.php",
+        `${headerTitle}/api/bookDetails.php`,
         {
           method: "POST",
           // headers: {
@@ -59,7 +60,7 @@ const BookDetailScreen = ({ navigation, route }) => {
           onPress={() => navigation.navigate("Home")}
           style={styles.icon}
         />
-        <AppText style={styles.title}>Details</AppText>
+        <AppText style={styles.title}>Details 📝</AppText>
       </View>
       {/* book styles */}
       {bookDetails ? (
