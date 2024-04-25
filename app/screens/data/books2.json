@@ -1,0 +1,112 @@
+[
+    {
+      "id": 1,
+      "title": "Book 1",
+      "price": "$9.99",
+      "image": "../../assets/bookshelve.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Book 2",
+      "price": "$12.99",
+      "image": "../../assets/bookshelve.jpg"
+    },
+    {
+      "id": 3,
+      "title": "clever land seasons",
+      "price": "$8.99",
+      "image": "../assets/clever_lands.jpg"
+    },
+    {
+      "id": 4,
+      "title": "Book 4",
+      "price": "$9.99",
+      "image": "../../assets/bookshelve.jpg"
+    },
+    {
+      "id": 5,
+      "title": "Book 5",
+      "price": "$12.99",
+      "image": "../../assets/bookshelve.jpg"
+    },
+    {
+      "id": 6,
+      "title": "Book 6",
+      "price": "$8.99",
+      "image": "../../assets/bookshelve.jpg"
+    },
+    {
+        "id": 1,
+        "title": "Book 1",
+        "price": "$9.99",
+        "image": "../../assets/bookshelve.jpg"
+      },
+      {
+        "id": 2,
+        "title": "Book 2",
+        "price": "$12.99",
+        "image": "../../assets/bookshelve.jpg"
+      },
+      {
+        "id": 3,
+        "title": "clever land seasons",
+        "price": "$8.99",
+        "image": "../assets/clever_lands.jpg"
+      },
+      {
+        "id": 4,
+        "title": "Book 4",
+        "price": "$9.99",
+        "image": "../../assets/bookshelve.jpg"
+      },
+      {
+        "id": 5,
+        "title": "Book 5",
+        "price": "$12.99",
+        "image": "../../assets/bookshelve.jpg"
+      },
+      {
+        "id": 6,
+        "title": "Book 6",
+        "price": "$8.99",
+        "image": "../../assets/bookshelve.jpg"
+      },
+      {
+        "id": 1,
+        "title": "Book 1",
+        "price": "$9.99",
+        "image": "../../assets/bookshelve.jpg"
+      },
+      {
+        "id": 2,
+        "title": "Book 2",
+        "price": "$12.99",
+        "image": "../../assets/bookshelve.jpg"
+      },
+      {
+        "id": 3,
+        "title": "clever land seasons",
+        "price": "$8.99",
+        "image": "../assets/clever_lands.jpg"
+      },
+      {
+        "id": 4,
+        "title": "Book 4",
+        "price": "$9.99",
+        "image": "../../assets/bookshelve.jpg"
+      },
+      {
+        "id": 5,
+        "title": "Book 5",
+        "price": "$12.99",
+        "image": "../../assets/bookshelve.jpg"
+      },
+      {
+        "id": 6,
+        "title": "Book 6",
+        "price": "$8.99",
+        "image": "../../assets/bookshelve.jpg"
+      }
+    
+  ]
+  

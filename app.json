@@ -2,6 +2,7 @@
   "expo": {
     "name": "Charism",
     "slug": "Charism",
+    "description": "This is a mobile bookstore app for inspirational books",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
@@ -21,10 +22,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.faithesther20.Charism"
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "85cd9191-f0d3-4684-a974-db5f0a41ec25"
+      }
     }
   }
 }

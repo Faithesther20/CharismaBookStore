@@ -1,5 +1,6 @@
 //@ts-check
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, } from "react-native";
+import { Text } from "react-native";
 
 // importing the font helper
 import { useFonts } from "expo-font";
@@ -17,6 +18,7 @@ function AppText({
   let [fontLoaded] = useFonts({
     // @ts-ignore
     Urbanist: require("../assets/fonts/Urbanist-VariableFont_wght.ttf"),
+
   });
 
   return (
